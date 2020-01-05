@@ -8,7 +8,7 @@ const createCsvWriter = require('csv-writer').createObjectCsvWriter;
 
 
 
-async function scrapeTitlesRanksAndRatings(date){
+async function scrapeInfo(date){
         const result = await request.get(
            `https://www.imdb.com/search/title/?title_type=feature&year=${date}-01-01,${date}-12-31&sort=num_votes,desc`
         );
@@ -72,19 +72,20 @@ async function scrapePosterUrl(movies){
 
 async function main(date){
 
-    let movies = await scrapeTitlesRanksAndRatings(date);
+    let movies = await scrapeInfo(date);
     movies = await scrapePosterUrl(movies);
     movies = await scrapePosterImageUrl(movies)
-    createCsv(movies)
+    createJson(movies)
+    console.log(movies)
 }
 
- function createCsv(data){
+ function createJson(data){
    
     const csvWriter = createCsvWriter({
         append: true,
         path: 'out.csv',
         header: [
-          {id: 'rank', tittle: 'Rank'},
+         {id: 'rank', tittle: 'Rank'},
           {id: 'year', title: 'Year'},
           {id: 'title', title: 'Title'},
           {id: 'description', title: 'Surname'},
@@ -117,7 +118,7 @@ async function start(data){
     console.log('STOP');
 }
 
-start(2000)
+start(2003)
    
 
 
