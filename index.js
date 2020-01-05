@@ -75,11 +75,10 @@ async function main(date){
     let movies = await scrapeTitlesRanksAndRatings(date);
     movies = await scrapePosterUrl(movies);
     movies = await scrapePosterImageUrl(movies)
-    createJson(movies)
-    console.log(movies)
+    createCsv(movies)
 }
 
- function createJson(data){
+ function createCsv(data){
    
     const csvWriter = createCsvWriter({
         append: true,
